@@ -240,13 +240,13 @@ _NON_ALNUM_RE = re.compile(r"[^\w\sÀ-ÿ]")
 
 # Newznab category constants
 CATEGORY_MOVIES = 2000
-CATEGORY_MOVIES_HD = 2030
-CATEGORY_MOVIES_UHD = 2040
+CATEGORY_MOVIES_HD = 2040
+CATEGORY_MOVIES_UHD = 2045
 CATEGORY_TV = 5000
-CATEGORY_TV_HD = 5030
-CATEGORY_TV_UHD = 5040
+CATEGORY_TV_HD = 5040
+CATEGORY_TV_UHD = 5045
 CATEGORY_ANIME = 5070  # Anime as TV subcategory
-CATEGORY_OTHER = 7000
+CATEGORY_OTHER = 8000
 
 
 def _parse_duration_seconds(raw: Any) -> Optional[int]:
@@ -692,15 +692,15 @@ def api():
             "</searching>"
             "<categories>"
             '<category id="2000" name="Movies">'
-            '<subcat id="2030" name="Movies/HD"/>'
-            '<subcat id="2040" name="Movies/UHD"/>'
+            '<subcat id="2040" name="HD"/>'
+            '<subcat id="2045" name="UHD"/>'
             "</category>"
             '<category id="5000" name="TV">'
-            '<subcat id="5030" name="TV/HD"/>'
-            '<subcat id="5040" name="TV/UHD"/>'
-            '<subcat id="5070" name="TV/Anime"/>'
+            '<subcat id="5040" name="HD"/>'
+            '<subcat id="5045" name="UHD"/>'
+            '<subcat id="5070" name="Anime"/>'
             "</category>"
-            '<category id="7000" name="Other"/>'
+            '<category id="8000" name="Other"/>'
             "</categories>"
             "</caps>"
         )
@@ -743,7 +743,7 @@ def api():
             not q or q.lower() == "test"
         ):  # allow Prowlarr validation calls to receive data
             # Check if TV/Anime categories are requested
-            tv_categories = {"5000", "5030", "5040"}
+            tv_categories = {"5000", "5040", "5045"}
             anime_categories = {"5070"}
             requested_categories = set(cat_param.split(",")) if cat_param else set()
             wants_tv = t == "tvsearch" or bool(requested_categories & tv_categories)
@@ -787,7 +787,7 @@ def api():
 
         if fallback_query:
             # Check if TV/Anime categories are requested
-            tv_categories = {"5000", "5030", "5040"}
+            tv_categories = {"5000", "5040", "5045"}
             anime_categories = {"5070"}
             requested_categories = set(cat_param.split(",")) if cat_param else set()
             wants_tv = t == "tvsearch" or bool(requested_categories & tv_categories)
@@ -802,7 +802,7 @@ def api():
                         "ext": ".mkv",
                         "sig": None,
                         "size": 350 * 1024 * 1024,
-                        "title": "[SampleSubs] Sample Anime Series - 01 [720p]",
+                        "title": "[SubsPlease] Sample Anime Series - 01 [720p]",
                         "sample": True,
                         "poster": "sample@example.com",
                         "posted": int(time.time()),
